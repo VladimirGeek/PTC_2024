@@ -1,8 +1,8 @@
 -module(mobius).
 -export([is_prime/1, prime_factors/1, is_square_multiple/1, find_square_multiples/2]).
 
-% Часть 2. Функция Мёбиуса
-% 2.1 Проверка простого числа
+
+%Проверка простого числа
 is_prime(N) -> is_prime_helper(N, 2).
 is_prime_helper(N, Divisor) when
   Divisor * Divisor > N -> true;
@@ -12,7 +12,7 @@ is_prime_helper(N, Divisor) ->
     true -> is_prime_helper(N, Divisor + 1)
   end.
 
-% 2.2 Список простых сомножителей
+% Список простых сомножителей
 prime_factors(N) -> prime_factors_helper(N, 2, [1], true).
 prime_factors_helper(N, _, [Head|Tail], _) when
   N == 1 -> [Head|Tail];
@@ -25,7 +25,7 @@ prime_factors_helper(N, Divisor, [Head|Tail], true) ->
 prime_factors_helper(N, Divisor, [Head|Tail], false) ->
   prime_factors_helper(N, Divisor + 1, [Head|Tail], is_prime(Divisor + 1)).
 
-% 2.3 Деление на квадрат простого числа
+% Деление на квадрат простого числа
 is_square_multiple(N) -> square_helper(lists:sort(prime_factors(N))).
 square_helper([_]) -> false;
 square_helper([X1, X2|Tail]) ->
@@ -34,7 +34,7 @@ square_helper([X1, X2|Tail]) ->
     true -> square_helper([X2|Tail])
   end.
 
-% 2.4 Нахождение последовательности
+% Нахождение последовательности
 find_square_multiples(Count, MaxN) -> helper(Count, 0, 2, MaxN).
 helper(Count, Increment, Number, _) when Count == Increment -> Number - Count;
 helper(_, _, Number, MaxN) when Number > MaxN -> fail;
